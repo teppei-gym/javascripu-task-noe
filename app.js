@@ -10,13 +10,32 @@
 // }
 
 // 課題１−２
-let result = prompt('日本の首都は？');
+// let result = prompt('日本の首都は？');
 
-console.log(result)
+// console.log(result)
 
-while (result !== '東京') {
-  alert('不正解です');
-  result = prompt('日本の首都は？')
+// while (result !== '東京') {
+//   alert('不正解です');
+//   result = prompt('日本の首都は？')
+// }
+
+// alert('正解です');
+
+// 課題１−３
+const output = tasks => {
+  console.log('========================');
+  console.log('現在持っているタスク');
+  console.log('========================');
+  tasks.forEach((task, index) => {
+    console.log(`${index} : ${task}`);
+  });
 }
 
-alert('正解です');
+let tasks = ['掃除', '買い物', '散歩'];
+output(tasks)
+
+while (tasks) {
+  tasks.push(prompt('タスクを入力してください'));
+  alert('タスクを追加しました');
+  output(tasks);
+}
