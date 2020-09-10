@@ -33,4 +33,5 @@ while (tasks) {
   tasks.push(obj);
   alert('タスクを追加しました');
   output(tasks);
+  obj.genre = prompt('「確認、追加、削除、完了」の4つのいぜれかを入力してください');
 }
