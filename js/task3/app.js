@@ -6,10 +6,10 @@ const task = document.getElementById('task-text');
 
 addBtn.addEventListener('click', function () {
   const taskVal = task.value;
-  if (taskVal === "") return;
+  if (!taskVal) return;
 
   output(taskVal, table);
-  task.value = "";
+  task.value = '';
 });
 
 function output(task, table) {
@@ -17,18 +17,11 @@ function output(task, table) {
 
   const appendTr = (tagName, value, classNanme = null) => {
     const el = document.createElement(tagName);
-    if (classNanme !== null) {
+    if (!classNanme) {
       el.classList.add(classNanme);
     }
     if (value === '削除') {
-      el.addEventListener('click', function (e) {
-        e.target.parentNode.remove();
-        const idElements = document.querySelectorAll('.task-id');
-        maxTaskId = 0;
-        for (let el of [...idElements]) {
-          el.textContent = ++maxTaskId;
-        }
-      })
+      el.addEventListener('click', deleteTask)
     }
     el.textContent = value;
     tr.appendChild(el);
@@ -40,4 +33,13 @@ function output(task, table) {
   appendTr('button', '削除');
 
   table.lastElementChild.appendChild(tr);
+}
+
+function deleteTask(e) {
+  e.target.parentNode.remove();
+  const idElements = document.querySelectorAll('.task-id');
+  maxTaskId = 0;
+  for (let el of [...idElements]) {
+    el.textContent = ++maxTaskId;
+  }
 }
