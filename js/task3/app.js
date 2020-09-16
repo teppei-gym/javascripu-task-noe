@@ -17,7 +17,7 @@ function output(task, table) {
 
   const appendTr = (tagName, value, classNanme = null) => {
     const el = document.createElement(tagName);
-    if (!classNanme) {
+    if (classNanme) {
       el.classList.add(classNanme);
     }
     if (value === '削除') {
@@ -38,6 +38,7 @@ function output(task, table) {
 function deleteTask(e) {
   e.target.parentNode.remove();
   const idElements = document.querySelectorAll('.task-id');
+  console.log(idElements)
   maxTaskId = 0;
   for (let el of [...idElements]) {
     el.textContent = ++maxTaskId;
