@@ -12,6 +12,12 @@ addBtn.addEventListener('click', function () {
   task.value = '';
 });
 
+const radios = document.getElementsByName('task-status');
+
+for (let radio of [...radios]) {
+  radio.addEventListener('change', displayByStatus);
+}
+
 function output(task, table) {
   let tr = document.createElement('tr');
 
@@ -20,6 +26,11 @@ function output(task, table) {
   tr.appendChild(createTd('button', '作業中'));
   tr.appendChild(createTd('button', '削除'));
 
+  for (let radio of [...radios]) {
+    if (radio.value === '完了' && radio.checked) {
+      tr.style.display = 'none';
+    }
+  }
   table.lastElementChild.appendChild(tr);
 }
 
@@ -33,7 +44,13 @@ function deleteTask(e) {
 }
 
 function changeStatus(e) {
-  e.target.textContent = e.target.textContent === '作業中' ? '完了' : '作業中';
+  const el = e.target;
+  el.textContent = e.target.textContent === '作業中' ? '完了' : '作業中';
+  for (let radio of [...radios]) {
+    if (radio.value !== 'all' && radio.checked) {
+      el.parentNode.style.display = 'none';
+    }
+  }
 }
 
 function createTd(tagName, value, classNanme = null) {
@@ -47,10 +64,26 @@ function createTd(tagName, value, classNanme = null) {
   }
 
   if (value === '作業中') {
+    el.classList.add('target-td');
     el.addEventListener('click', changeStatus);
   }
 
   el.textContent = value;
 
   return el;
+}
+
+function displayByStatus(e) {
+  const td = document.querySelectorAll('.target-td');
+
+  const status = e.target.value;
+  for (let target of [...td]) {
+    target.parentNode.style.display = 'table-row';
+
+    if (status === 'all') continue;
+
+    if (target.textContent !== status) {
+      target.parentNode.style.display = 'none';
+    }
+  }
 }
